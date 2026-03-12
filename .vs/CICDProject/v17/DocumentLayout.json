@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\visual studio code 2022 all projects file\\CICDProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F9F7D1E3-C78D-4D77-BBBF-02E914670A50}|CICDProject\\CICDProject.csproj|c:\\visual studio code 2022 all projects file\\cicdproject\\cicdproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F9F7D1E3-C78D-4D77-BBBF-02E914670A50}|CICDProject\\CICDProject.csproj|solutionrelative:cicdproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\visual studio code 2022 all projects file\\CICDProject\\CICDProject\\Program.cs",
+              "RelativeDocumentMoniker": "CICDProject\\Program.cs",
+              "ToolTip": "C:\\visual studio code 2022 all projects file\\CICDProject\\CICDProject\\Program.cs",
+              "RelativeToolTip": "CICDProject\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAiwBcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-12T18:47:19.252Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
