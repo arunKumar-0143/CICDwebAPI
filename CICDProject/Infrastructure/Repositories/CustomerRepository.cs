@@ -1,5 +1,6 @@
 using System.Data;
 using Dapper;
+using Microsoft.Extensions.Logging;
 using CICDProject.Domain.Entities;
 using CICDProject.Infrastructure.Data;
 
@@ -8,10 +9,12 @@ namespace CICDProject.Infrastructure.Repositories;
 public class CustomerRepository : ICustomerRepository
 {
     private readonly IDbConnectionFactory _dbConnectionFactory;
+    private readonly ILogger<CustomerRepository> _logger;
 
-    public CustomerRepository(IDbConnectionFactory dbConnectionFactory)
+    public CustomerRepository(IDbConnectionFactory dbConnectionFactory, ILogger<CustomerRepository> logger)
     {
         _dbConnectionFactory = dbConnectionFactory;
+        _logger = logger;
     }
 
     public async Task<Customer?> GetCustomerByIdAsync(Guid customerId, CancellationToken cancellationToken = default)
@@ -32,15 +35,23 @@ public class CustomerRepository : ICustomerRepository
               AND is_active = true
               AND is_delete = false;";
 
-        await using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
-        
-        CommandDefinition commandDefinition = new CommandDefinition(
-            querySql, 
-            new { CustomerId = customerId }, 
-            cancellationToken: cancellationToken);
+        try
+        {
+            await using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+            
+            CommandDefinition commandDefinition = new CommandDefinition(
+                querySql, 
+                new { CustomerId = customerId }, 
+                cancellationToken: cancellationToken);
 
-        Customer? customerEntity = await connection.QuerySingleOrDefaultAsync<Customer>(commandDefinition);
-        return customerEntity;
+            Customer? customerEntity = await connection.QuerySingleOrDefaultAsync<Customer>(commandDefinition);
+            return customerEntity;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Database error retrieving customer with ID {CustomerId}", customerId);
+            throw;
+        }
     }
 
     public async Task<Customer?> GetCustomerByCodeAsync(string customerCode, CancellationToken cancellationToken = default)
@@ -61,15 +72,23 @@ public class CustomerRepository : ICustomerRepository
               AND is_active = true
               AND is_delete = false;";
 
-        await using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
-        
-        CommandDefinition commandDefinition = new CommandDefinition(
-            querySql, 
-            new { CustomerCode = customerCode }, 
-            cancellationToken: cancellationToken);
+        try
+        {
+            await using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+            
+            CommandDefinition commandDefinition = new CommandDefinition(
+                querySql, 
+                new { CustomerCode = customerCode }, 
+                cancellationToken: cancellationToken);
 
-        Customer? customerEntity = await connection.QuerySingleOrDefaultAsync<Customer>(commandDefinition);
-        return customerEntity;
+            Customer? customerEntity = await connection.QuerySingleOrDefaultAsync<Customer>(commandDefinition);
+            return customerEntity;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Database error retrieving customer with code {CustomerCode}", customerCode);
+            throw;
+        }
     }
 
     public async Task<int> CreateCustomerAsync(Customer customerEntity, CancellationToken cancellationToken = default)
@@ -95,14 +114,22 @@ public class CustomerRepository : ICustomerRepository
                 @CreatedAtUtc
             );";
 
-        await using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
-        
-        CommandDefinition commandDefinition = new CommandDefinition(
-            insertSql, 
-            customerEntity, 
-            cancellationToken: cancellationToken);
+        try
+        {
+            await using IDbConnection connection = await _dbConnectionFactory.CreateConnectionAsync(cancellationToken);
+            
+            CommandDefinition commandDefinition = new CommandDefinition(
+                insertSql, 
+                customerEntity, 
+                cancellationToken: cancellationToken);
 
-        int affectedRows = await connection.ExecuteAsync(commandDefinition);
-        return affectedRows;
+            int affectedRows = await connection.ExecuteAsync(commandDefinition);
+            return affectedRows;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Database error creating customer with ID {CustomerId}", customerEntity.CustomerId);
+            throw;
+        }
     }
 }
