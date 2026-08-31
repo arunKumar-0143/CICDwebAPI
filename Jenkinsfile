@@ -2,21 +2,40 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
-                checkout scm
+                echo 'Checking out source code'
+            }
+        }
+
+        stage('Restore') {
+            steps {
+                echo 'Restoring dependencies'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'dotnet build CICDProject.sln'
+                echo 'Building Web API'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'dotnet test CICDProject.sln'
+                echo 'Running unit tests'
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                echo 'Publishing Web API'
+            }
+        }
+
+        stage('Deliver') {
+            steps {
+                echo 'Delivering application'
             }
         }
     }
