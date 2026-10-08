@@ -1,6 +1,17 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+# Visual Studio / .NET Ignore Rules
 ################################################################################
 
-/.vs/CICDProject
-/CICDProject/obj/Debug/net9.0/rpswa.dswa.cache.json
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Publish output
+publish/
