@@ -1,9 +1,9 @@
 @echo off
 echo ========================================================
-echo  BUILDING ERP.ECommerce SOLUTION
+echo  BUILDING CICDProject SOLUTION
 echo ========================================================
 
-dotnet build "ERP.ECommerce.API.sln"
+dotnet build "CICDProject.sln"
 
 if %ERRORLEVEL% neq 0 (
     echo.

@@ -4,7 +4,7 @@ echo "========================================="
 echo "Running pre-push build validation..."
 echo "========================================="
 
-cmd.exe /c build.bat
+./build.bat
 
 if [ $? -ne 0 ]; then
     echo ""
