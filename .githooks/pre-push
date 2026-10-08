@@ -1,18 +1,32 @@
 #!/bin/sh
 
+# Move to the root directory of the Git repository
+ROOT_DIR=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+cd "$ROOT_DIR" || exit 1
+
 echo "========================================="
 echo "Running pre-push build validation..."
 echo "========================================="
+echo "========================================================"
+echo " BUILDING CICDProject SOLUTION"
+echo "========================================================"
 
-./build.bat
+dotnet build "CICDProject.sln"
+BUILD_STATUS=$?
 
-if [ $? -ne 0 ]; then
+if [ $BUILD_STATUS -ne 0 ]; then
     echo ""
+    echo "========================================================"
+    echo " BUILD FAILED! Exiting with code 1..."
+    echo "========================================================"
     echo "❌ Build failed! Push cancelled."
     echo "Please fix the build errors before pushing."
     exit 1
 fi
 
 echo ""
+echo "========================================================"
+echo " BUILD SUCCESSFUL!"
+echo "========================================================"
 echo "✅ Build succeeded. Continuing git push..."
 exit 0
