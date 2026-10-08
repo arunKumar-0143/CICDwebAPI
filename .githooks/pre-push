@@ -15,6 +15,7 @@ dotnet build "CICDProject.sln"
 BUILD_STATUS=$?
 
 if [ $BUILD_STATUS -ne 0 ]; then
+    git reset --soft origin/main
     echo ""
     echo "========================================================"
     echo " BUILD FAILED! Exiting with code 1..."
